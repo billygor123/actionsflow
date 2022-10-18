@@ -1,0 +1,19 @@
+on:
+  rss:
+    url: https://rss.weather.gov.hk/rss/LocalWeatherForecast_uc.xml
+jobs:
+  request:
+    name: Request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make a HTTP Request      
+        uses: actionsflow/axios@main
+        with:
+          url: https://sms.thuraya.com/sms.php
+          method: POST
+          body: |
+            {
+              "msisdn":"44410603", 
+              "from": "WX",
+              "content":"<<<${{on.rss.outputs.contentSnippet}}>>>"
+            }
